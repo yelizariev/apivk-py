@@ -1,5 +1,5 @@
-import pyvkt.secure as secure
-from pyvkt.vkqueue import VKQueue
+import apivk.secure as secure
+from apivk.vkqueue import VKQueue
 
 q = VKQueue(api_id='1', api_secret='apisecuresecret', req_per_second = 5)
 q.add_req(secure.saveAppStatus(uid='1', status='Hi, Pavel!'))

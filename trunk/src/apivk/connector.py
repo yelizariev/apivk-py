@@ -1,4 +1,6 @@
-import urllib, hashlib, random, json
+import urllib, hashlib, random
+import simplejson as json
+#import json # python 2.6
 from . import unixtime
 
 api_version='2.0'

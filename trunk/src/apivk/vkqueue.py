@@ -11,8 +11,8 @@ class VKQueue(Queue.Queue):
         self.q = Queue.Queue(max_queue_size)
         for x in xrange(req_per_second):
             conn = connector.Connector(api_id, api_secret)
-            self.t = vkthread.VKThread(self.q, conn)
-            self.t.start()
+            t = vkthread.VKThread(self.q, conn)
+            t.start()
 
     def add_req(self, params, fok = None, ferror = None):
         """add request in queue

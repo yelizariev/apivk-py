@@ -1,1 +1,1 @@
-__all__ = ["secure", "connector"]
+__all__ = ["secure", "vkqueue"]

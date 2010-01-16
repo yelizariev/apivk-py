@@ -8,13 +8,13 @@ class VKQueue(Queue.Queue):
                  req_per_second = 5,
                  max_queue_size = 1000):
         """requests queue"""
-        self.q = Queue.Queue(max_queue_size)
+        Queue.Queue.__init__(self, max_queue_size)
+        conn = connector.Connector(api_id, api_secret)
         for x in xrange(req_per_second):
-            conn = connector.Connector(api_id, api_secret)
-            t = vkthread.VKThread(self.q, conn)
+            t = vkthread.VKThread(self, conn)
             t.start()
 
-    def add_req(self, params, fok = None, ferror = None):
+    def put(self, params, fok = None, ferror = None):
         """add request in queue
 
         fok(obj) - call on success response
@@ -24,4 +24,4 @@ class VKQueue(Queue.Queue):
 
         request_params = [{"key": "xxx", "value": "yyy"}, ...]
         """
-        self.q.put((params, fok, ferror))
+        Queue.Queue.put(self, (params, fok, ferror))

@@ -1,4 +1,5 @@
 import threading, time
+from . import connector
 
 class VKThread(threading.Thread):
     def __init__(self, queue, conn):
@@ -34,7 +35,7 @@ class VKThread(threading.Thread):
 
     def send(self):
         """ return True if no error 6 'many requests per second'"""
-        r = self.c.req(self.p) # r = response
+        r = connector.req(self.p, self.c) # r = response
         if r.has_key('response'):
             if self.fok:
                 self.fok(r['response'])

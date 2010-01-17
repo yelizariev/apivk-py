@@ -1,8 +1,8 @@
 import apivk.secure as secure
 from apivk.vkqueue import VKQueue
 
-q = VKQueue(api_id='1', api_secret='apisecuresecret', req_per_second = 5)
-q.put(secure.saveAppStatus(uid='1', status='Hi, Pavel!'),
+q = VKQueue('1', 'apisecuresecret', async_queue_max_size=5)
+q.async(secure.saveAppStatus(uid='1', status='Hi, Pavel!'),
           on_success,
           on_error)
 

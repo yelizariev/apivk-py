@@ -9,3 +9,10 @@ def saveAppStatus(uid, status):
         'uid': uid,
         'status': status,
         'method': 'secure.saveAppStatus'}
+
+def getProfiles(uids, fields):
+    """uids - list string id"""
+    return {
+        'uids': ','.join(uids),
+        'fields': ','.join(fields),
+        'method': 'secure.getProfiles'}

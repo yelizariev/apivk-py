@@ -21,7 +21,7 @@ class VKThread(threading.Thread):
         while True:
             if self.aq.empty() or not self.sq.empty():
                 try:
-                    item = self.sq.get(True, 1)
+                    item = self.sq.get(True, 10)
                 except Queue.Empty:
                     continue
             else:

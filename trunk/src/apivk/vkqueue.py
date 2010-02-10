@@ -66,7 +66,7 @@ class VKError(Exception):
         self.msg = msg
         self.rp = rp
     def __str__(self):
-        return 'VKError %s: %s'%(self.code, self.msg)
+        return 'VKError %s "%s"'%(self.code, self.msg)
 
 class VKQueueTimeout(Exception):
     def __str__(self):

@@ -1,4 +1,4 @@
-import urllib, hashlib, random
+import urllib, urllib2, hashlib, random
 import simplejson as json
 #import json # python 2.6
 from . import unixtime
@@ -42,6 +42,6 @@ def req(method_params, conn):
     """sync request and return object"""
     p = conn.params(method_params)
     data = urllib.urlencode(p)
-    response = urllib.urlopen('http://api.vkontakte.ru/api.php', data)
+    response = urllib2.urlopen('http://api.vkontakte.ru/api.php', data)
     str = response.read()
     return json.loads(str)

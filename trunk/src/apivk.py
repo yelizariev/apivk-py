@@ -204,6 +204,7 @@ class VKReq():
         while(True):
             r = random.randint(0, 1000000)
             if (r != self.random):
+                self.random = r
                 break
 
     def _sig(self, params):

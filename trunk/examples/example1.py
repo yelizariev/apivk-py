@@ -13,4 +13,8 @@ q.add(secure.saveAppStatus(uid='1', status='Hi, Pavel!'), on_success, on_error)
 
 #sync request
 event = q.add(secure.saveAppStatus(uid='1', status='Hello world!'))
-event.wait()
+try:
+    response = event.wait()
+    print 'response:', response
+except VKError, e:
+    print 'VKError %s: %s'%(e.code, e.msg)

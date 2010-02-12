@@ -49,7 +49,7 @@ class VKQueue():
         self.q = Q(max_queue_size)
         req = VKReq(api_id, api_secret)
         self.c = threading.Condition()
-        req_interval = float(req_per_second)/threads_count
+        req_interval = float(threads_count)/req_per_second
         for x in xrange(threads_count):
             t = VKThread(self.q, self.c, req, req_interval)
             t.start()
@@ -93,6 +93,9 @@ class VKEvent():
         self.e = exception
         if self.ferror:
             self.ferror(self.e.code, self.e.msg, self.e.rp)
+        self.event.set()
+    def fatal(self, exception):
+        self.e = exception
         self.event.set()
     def wait(self):
         self.event.wait()
@@ -179,7 +182,7 @@ class VKThread(threading.Thread):
                         event.error(e)
                         break
                 except Exception, e:
-                    print 'unhandled error while parsing vk response:', e
+                    event.fatal(e)
                     break
                 else:
                     event.ok(data)

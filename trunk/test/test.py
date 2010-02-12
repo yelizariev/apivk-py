@@ -8,7 +8,7 @@ import time
 from threading import Thread
 
 api_id = '1788474'
-api_secret = 'securesecret'
+api_secret = 'apisecuresecret'
 uid = '1857932'
 
 q = VKQueue(api_id, api_secret, 3, 3)

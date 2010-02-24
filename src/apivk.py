@@ -154,6 +154,7 @@ def vkparse(data):
 
 ###############
 ### VKThread
+DEFAULT_THREAD_SLEEP=0.01
 class VKThread(threading.Thread):
     def __init__(self, queue, condition, vkreq, req_interval):
         threading.Thread.__init__(self)
@@ -177,7 +178,7 @@ class VKThread(threading.Thread):
             finally:
                 c.release()
             if PRIORITY_QUEUE:
-                (priot, (params, event)) = item
+                (prior, (params, event)) = item
             else:
                 (params, event) = item
             sleep = self.req_interval
@@ -199,10 +200,14 @@ class VKThread(threading.Thread):
                     break
                 else:
                     event.ok(data)
+                    break
+                finally:
                     t = self.req_interval + t - time.time()
                     if t>0 :
                         time.sleep(t)
-                    break
+                    else:
+                        time.sleep(DEFAULT_THREAD_SLEEP)
+
 ############
 ### VKReq
 import urllib, random

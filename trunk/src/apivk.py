@@ -154,7 +154,7 @@ def vkparse(data):
 
 ###############
 ### VKThread
-DEFAULT_THREAD_SLEEP=1
+DEFAULT_THREAD_SLEEP=0.1
 class VKThread(threading.Thread):
     def __init__(self, queue, condition, vkreq, req_interval):
         threading.Thread.__init__(self)

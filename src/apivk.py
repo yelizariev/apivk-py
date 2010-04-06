@@ -154,7 +154,7 @@ def vkparse(data):
 
 ###############
 ### VKThread
-DEFAULT_THREAD_SLEEP=0.01
+DEFAULT_THREAD_SLEEP=1
 class VKThread(threading.Thread):
     def __init__(self, queue, condition, vkreq, req_interval):
         threading.Thread.__init__(self)
@@ -184,8 +184,8 @@ class VKThread(threading.Thread):
             sleep = self.req_interval
             while True:
                 t = time.time()
-                resp = urllib2.urlopen(req.get(params)).read()
                 try:
+                    resp = urllib2.urlopen(req.get(params)).read()
                     data = vkparse(resp)
                 except VKError, e:
                     if (e.code == 6):

@@ -20,4 +20,5 @@ def getProfiles(uids, fields):
 def setCounter(uid, counter):
     return {
         'uid':uid,
+        'counter':counter,
         'method':'secure.setCounter'}

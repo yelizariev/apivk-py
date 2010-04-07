@@ -16,3 +16,8 @@ def getProfiles(uids, fields):
         'uids': ','.join(uids),
         'fields': ','.join(fields),
         'method': 'secure.getProfiles'}
+
+def setCounter(uid, counter):
+    return {
+        'uid':uid,
+        'method':'secure.setCounter'}

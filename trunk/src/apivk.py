@@ -61,10 +61,9 @@ class VKQueue():
                  max_queue_size = 1000):
         self.q = Q(max_queue_size)
         req = VKReq(api_id, api_secret)
-        self.c = threading.Condition()
         req_interval = float(threads_count)/req_per_second
         for x in xrange(threads_count):
-            t = VKThread(self.q, self.c, req, req_interval)
+            t = VKThread(self.q, req, req_interval)
             t.start()
 
     def add(self, params, fok = None, ferror = None, prior = 0):
@@ -80,13 +79,10 @@ class VKQueue():
         return VKEvent
         """
         event = VKEvent(fok, ferror)
-        self.c.acquire()
         if PRIORITY_QUEUE:
             self.q.put((prior, (params, event)), False)
         else:
             self.q.put((params, event), False)
-        self.c.notify()
-        self.c.release()
         return event
 
 ##############
@@ -156,27 +152,17 @@ def vkparse(data):
 ### VKThread
 DEFAULT_THREAD_SLEEP=0.1
 class VKThread(threading.Thread):
-    def __init__(self, queue, condition, vkreq, req_interval):
+    def __init__(self, queue, vkreq, req_interval):
         threading.Thread.__init__(self)
-        self.c = condition
         self.q = queue
         self.req = vkreq
         self.req_interval = req_interval
 
     def run(self):
-        c=self.c
         q=self.q
         req=self.req
         while True:
-            c.acquire()
-            if q.empty():
-                c.wait()
-            try:
-                item = q.get(False)
-            except Queue.Empty:
-                continue
-            finally:
-                c.release()
+            item = q.get()
             if PRIORITY_QUEUE:
                 (prior, (params, event)) = item
             else:

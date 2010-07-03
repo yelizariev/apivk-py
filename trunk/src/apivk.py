@@ -22,7 +22,7 @@ def vktime():
     if (m):
         return int(m.group(1))
     else:
-        raise VKTimeSyncError(r)
+        return int(time.time())
 
 DELTA_UNIXTIME = vktime() - int(time.time())
 def timestamp():
@@ -122,12 +122,6 @@ class VKError(Exception):
         self.rp = rp
     def __str__(self):
         return 'VKError %s "%s"'%(self.code, self.msg)
-
-class VKTimeSyncError(Exception):
-    def __init__(self, response):
-        self.response = response
-    def __str__(self):
-        return 'VKTimeSyncError %s'%self.response
 
 #############
 ### Parser
